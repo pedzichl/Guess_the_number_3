@@ -1,6 +1,8 @@
 from flask import Flask, request
 
+
 app = Flask(__name__)
+
 
 HTML_START = """
 <!DOCTYPE html>
@@ -19,23 +21,8 @@ HTML_START = """
 </body>
 </html>
 """
-from flask import Flask, request
-app = Flask(__name__)
-
-@app.route("/", methods= ["GET", "POST"])
-
-def hello_world():
-    if request.method == "GET":
-        return introduction.html.format(0, 1000)
-    else:
-        min_number = int(request.form.get("min"))
-        max_number = int(request.form.get("max"))
-        user_answer = request.form.get("user_answer")
-        guess = int(request.form.get("guess", 500))
 
 
-
-app.run(debug=True)
 HTML = """
 <!DOCTYPE html>
 <html lang="en">
@@ -57,6 +44,7 @@ HTML = """
 </html>
 """
 
+
 HTML_WIN = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,12 +53,13 @@ HTML_WIN = """<!DOCTYPE html>
 </head>
 <body>
 <h1>Hurra! I guess! Your number is {guess}</h1>
+
 </body>
 </html>
 """
 
-@app.route("/", methods=["GET", "POST"])
 
+@app.route("/", methods=["GET", "POST"])
 def guess_the_number():
     if request.method == "GET":
         return HTML_START.format(0, 1000)
@@ -86,8 +75,12 @@ def guess_the_number():
             min_number = guess
         elif user_answer == "you win":
             return HTML_WIN.format(guess=guess)
+
         guess = (max_number - min_number) // 2 + min_number
+
         return HTML.format(guess=guess, min=min_number, max=max_number)
+
 
 if __name__ == '__main__':
     app.run()
+
